@@ -32,13 +32,15 @@ summarize mean_pm_ugm3 if birth_period == 0, detail
 *** Analysis 
 * Unadjusted
 poisson Asthma5 mean_pm_ugm3, vce(robust) irr
+
 * Clinical 
 poisson Asthma5 mean_pm_ugm3 ga_weeks birth_weight_grams i.sex_enc i.bpd dcg_age_days i.dcg_med i.any_dcg_support i.birth_period, vce(robust) irr
+
 * Add Insurance and Deprivation Index
 poisson Asthma5 mean_pm_ugm3 ga_weeks birth_weight_grams i.sex_enc i.bpd dcg_age_days i.dcg_med i.any_dcg_support i.birth_period i.insurancetype normalized_dep_index, vce(robust) irr
+
 * Add Race/Ethnicity
 poisson Asthma5 mean_pm_ugm3 ga_weeks birth_weight_grams i.sex_enc i.bpd dcg_age_days i.dcg_med i.any_dcg_support i.birth_period i.insurancetype normalized_dep_index i.race_ethnicity_enc, vce(robust) irr
-margins, dydx(mean_pm_ugm3)
 
 * Tertiles
 table1_mc, by(mean_pm_ugm3_tert) vars(Asthma5 cat \ mean_pm_ugm3 contn \ ga_weeks contn \ extremepreterm cat \ birth_weight_grams contn \ elbw cat \ bpd cat \ dcg_age_days contn \ dcmed_cat cat \ dcg_support cat \  sex cat \ race_ethnicity cat \ edip_insur cat \ dep_index contn \ severity_phe cat \ readm_flag cat \ birth_year cat \ birth_period cat \ race_ethnicity cat \ county cat) test
@@ -72,15 +74,15 @@ summarize mean_pm_ugm3 if mean_pm_ugm3_tert == 3 & PhiladelphiaCo == 0
 * Unadjusted
 poisson Asthma5 i.mean_pm_ugm3_tert, vce(robust) irr
 margins i.mean_pm_ugm3_tert, pwcompare(effects)
+
 * Clinical
 poisson Asthma5 i.mean_pm_ugm3_tert ga_weeks birth_weight_grams i.sex_enc i.bpd dcg_age_days i.dcg_med i.any_dcg_support i.birth_period, vce(robust) irr
-margins i.mean_pm_ugm3_tert, pwcompare(effects)
+
 * Add Insurance and Deprivation Index
 poisson Asthma5 i.mean_pm_ugm3_tert ga_weeks birth_weight_grams i.sex_enc i.bpd dcg_age_days i.dcg_med i.any_dcg_support i.birth_period i.insurancetype normalized_dep_index, vce(robust) irr
-margins i.mean_pm_ugm3_tert, pwcompare(effects)
+
 * Add Race/Ethnicity
 poisson Asthma5 i.mean_pm_ugm3_tert ga_weeks birth_weight_grams i.sex_enc i.bpd dcg_age_days i.dcg_med i.any_dcg_support i.birth_period i.insurancetype normalized_dep_index i.race_ethnicity_enc, vce(robust) irr
-margins i.mean_pm_ugm3_tert, pwcompare(effects)
 
 * Sensitivity Analysis
 poisson Asthma5 mean_pm_ugm3 ga_weeks birth_weight_grams i.sex_enc i.bpd dcg_age_days i.dcg_med i.any_dcg_support i.birth_period i.insurancetype normalized_dep_index i.race_ethnicity_enc if county == "PHILADELPHIA", vce(robust) irr
